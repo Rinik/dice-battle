@@ -2,8 +2,15 @@
 
 # Import needed classes, random to scramble the dice, time to add waiting time when the dice's are rolled.
 import random
-import time
+import sys
 
+# Optional colors to text output.
+class BColors:
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
 
 player_score = 0
 computer_score = 0
@@ -25,9 +32,13 @@ def game():
 
 def turn():
     global player_score, computer_score, turn_score
-    if (player_score or computer_score) >= 100:
-        print("GAME OVER!")
+    if (player_score) >= 100:
+        print(BColors.FAIL+"GAME OVER!"+BColors.ENDC)
         print("Your score: "+str(player_score)+" and my score: "+str(computer_score))
+        exit()
+    elif (computer_score) >=100:
+        print(BColors.FAIL + "GAME OVER!" + BColors.ENDC)
+        print("Your score: " + str(player_score) + " and my score: " + str(computer_score))
         exit()
     else:
         print("Your score is: " + str(player_score))
@@ -37,13 +48,13 @@ def turn():
         throw = input("Would you like to throw the dice? y/n: ")
         if throw in ("y", "Y"):
             if dice == 1:
-                print("\nSorry you trew 1. Lost your points and turn.\n")
+                print(BColors.FAIL+"\nSorry you trew 1. Lost your points and turn.\n"+BColors.ENDC)
                 turn_score = 0
                 computer_turn()
             else:
                 print("You threw: "+str(dice)+"\n")
                 turn_score += dice
-                print("Current score from this turn is: "+str(turn_score)+"\n")
+                print("Current score from this turn is: "+BColors.OKGREEN+str(turn_score)+BColors.ENDC+"\n")
                 turn()
         elif throw in ("q"):
             exit()
@@ -65,7 +76,7 @@ def computer_turn():
             dice = random.randint(1, 6)
             dice_probability.append(dice)
             if dice == 1:
-                print("\nI lost my points and now it's your turn.\n")
+                print(BColors.FAIL+"\nI lost my points and now it's your turn.\n"+BColors.ENDC)
                 turn_score = 0
                 turn()
             else:
@@ -76,6 +87,7 @@ def computer_turn():
                 else:
                     computer_score += turn_score
                     print("Your turn.")
+                    turn_score = 0
                     turn()
 
 
