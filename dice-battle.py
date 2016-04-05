@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+#HH 1200771
+
 # Import needed classes, random to scramble the dice, time to add waiting time when the dice's are rolled.
 import random
 import sys
